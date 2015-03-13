@@ -43,11 +43,6 @@ function zaw-src-git-files-classify-aux() {
     return 0
 }
 
-function zaw-src-git-files-legacy-aux() {
-    : ${(A)candidates::=${(0)"$(git ls-files $(git rev-parse --show-cdup) -z)"}}
-    return 0
-}
-
 function zaw-src-git-files-add () {
     BUFFER="git add $1"
     zle accept-line
@@ -59,7 +54,6 @@ function zaw-src-git-files-add () {
         zaw-register-src -n "$1" "$2"
     }
     zaw-src-git-files-register-src git-files zaw-src-git-files zaw-src-git-files-classify-aux
-    zaw-src-git-files-register-src git-files-legacy zaw-src-git-files-legacy{,-aux}
 } always {
     unfunction zaw-src-git-files-register-src
 }
