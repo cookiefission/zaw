@@ -9,17 +9,9 @@ autoload -U fill-vars-or-accept
 
 DIRSFILE="${DIRSFILE:-"${HOME}/.zaw-dirs"}"
 
-ASSOC_DIRS=()
-typeset -A ASSOC_DIRS
-
 function zaw-src-dirs() {
     if [[ -f "${DIRSFILE}" ]]; then
-        local -a raw_dirs
-        raw_dirs=("${(Qf)$(zsystem flock -r "${DIRSFILE}" && < "${DIRSFILE}")}")
-        for dir in $raw_dirs; do
-            ASSOC_DIRS+=("`basename $dir`" "$dir")
-            candidates+=("`basename $dir`")
-        done
+        candidates=("${(Qf)$(zsystem flock -r "${DIRSFILE}" && < "${DIRSFILE}")}")
     fi
     actions=("zaw-dirs-execute" "zaw-dirs-add" "zaw-dirs-remove")
     act_descriptions=("execute" "add current directory to dirs" "removed directory")
@@ -34,7 +26,7 @@ zaw-register-src -n dirs zaw-src-dirs
 #
 
 function zaw-dirs-execute() {
-    zaw-callback-replace-buffer "cd $ASSOC_DIRS[$1]"
+    zaw-callback-replace-buffer "cd $@"
     fill-vars-or-accept
 }
 
