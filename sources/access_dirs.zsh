@@ -18,7 +18,7 @@ function zaw-src-dirs() {
     options=("-m")
 }
 
-zaw-register-src -n dirs zaw-src-dirs
+zaw-register-src -n access_dirs zaw-src-dirs
 
 
 #
