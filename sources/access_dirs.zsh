@@ -13,8 +13,8 @@ function zaw-src-dirs() {
     if [[ -f "${DIRSFILE}" ]]; then
         candidates=("${(Qf)$(zsystem flock -r "${DIRSFILE}" && < "${DIRSFILE}")}")
     fi
-    actions=("zaw-dirs-execute" "zaw-dirs-add" "zaw-dirs-remove")
-    act_descriptions=("execute" "add current directory to dirs" "removed directory")
+    actions=("zaw-dirs-execute" "zaw-dirs-add" "zaw-dirs-remove" "zaw-dirs-edit")
+    act_descriptions=("execute" "add current directory to dirs" "remove directory" "edit zaw dirs file")
     options=("-m")
 }
 
@@ -83,6 +83,11 @@ function zaw-dirs-remove() {
     if [[ $? == 0 ]]; then
         zle -M "dirs '${(j:', ':)@}' removed"
     fi
+}
+
+function zaw-dirs-edit() {
+    zaw-callback-replace-buffer "$EDITOR $DIRSFILE"
+    fill-vars-or-accept
 }
 
 function zaw-dirs-remove-buffer() {
