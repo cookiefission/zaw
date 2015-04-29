@@ -11,6 +11,12 @@ function zaw-src-history() {
         actions+="zaw-bookmark-add"
         act_descriptions+="bookmark this command line"
     fi
+
+    if (( $+functions[zaw-dir-bookmark-add] )); then
+        # zaw-src-bookmark is available
+        actions+="zaw-dir-bookmark-add"
+        act_descriptions+="bookmark this command line for this directory"
+    fi
 }
 
 zaw-register-src -n history zaw-src-history
